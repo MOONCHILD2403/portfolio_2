@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#0D0E10"/>
+  <rect x="90" y="90" width="1020" height="620" rx="28" fill="url(#a)" stroke="#F3F4F6" stroke-opacity=".18"/>
+  <path d="M200 550H1000" stroke="#F3F4F6" stroke-opacity=".3" stroke-width="3"/>
+  <rect x="220" y="240" width="180" height="240" rx="20" fill="#76B4C8" fill-opacity=".18"/>
+  <rect x="470" y="190" width="180" height="290" rx="20" fill="#D89D95" fill-opacity=".26"/>
+  <rect x="720" y="130" width="180" height="350" rx="20" fill="#D0A26F" fill-opacity=".2"/>
+  <text x="220" y="620" fill="#F3F4F6" font-family="monospace" font-size="28">cache</text>
+  <text x="470" y="620" fill="#F3F4F6" font-family="monospace" font-size="28">deploy</text>
+  <text x="720" y="620" fill="#F3F4F6" font-family="monospace" font-size="28">migrate</text>
+  <defs>
+    <linearGradient id="a" x1="90" y1="90" x2="1110" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17191D"/>
+      <stop offset="1" stop-color="#101114"/>
+    </linearGradient>
+  </defs>
+</svg>

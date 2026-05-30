@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#0D0E10"/>
+  <rect x="90" y="90" width="1020" height="620" rx="28" fill="url(#a)" stroke="#F3F4F6" stroke-opacity=".18"/>
+  <rect x="170" y="190" width="860" height="120" rx="20" fill="#F3F4F6" fill-opacity=".05"/>
+  <rect x="170" y="350" width="380" height="220" rx="20" fill="#D0A26F" fill-opacity=".22"/>
+  <rect x="590" y="350" width="440" height="220" rx="20" fill="#76B4C8" fill-opacity=".16"/>
+  <text x="210" y="265" fill="#F3F4F6" font-family="monospace" font-size="44">11 languages</text>
+  <text x="210" y="430" fill="#F3F4F6" font-family="monospace" font-size="28">query optimization</text>
+  <text x="210" y="480" fill="#F3F4F6" font-family="monospace" font-size="28">NextAuth + Prisma</text>
+  <defs>
+    <linearGradient id="a" x1="90" y1="90" x2="1110" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17191D"/>
+      <stop offset="1" stop-color="#111317"/>
+    </linearGradient>
+  </defs>
+</svg>

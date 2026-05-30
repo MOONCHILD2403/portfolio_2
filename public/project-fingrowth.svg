@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" fill="none">
+  <rect width="1200" height="800" fill="#0D0E10"/>
+  <rect x="90" y="90" width="1020" height="620" rx="28" fill="url(#a)" stroke="#F3F4F6" stroke-opacity=".18"/>
+  <rect x="160" y="190" width="300" height="430" rx="22" fill="#76B4C8" fill-opacity=".16"/>
+  <rect x="510" y="190" width="530" height="170" rx="22" fill="#F3F4F6" fill-opacity=".06"/>
+  <rect x="510" y="400" width="530" height="220" rx="22" fill="#D0A26F" fill-opacity=".18"/>
+  <text x="200" y="280" fill="#F3F4F6" font-family="monospace" font-size="34">JWT</text>
+  <text x="200" y="340" fill="#F3F4F6" font-family="monospace" font-size="34">auth</text>
+  <text x="550" y="290" fill="#F3F4F6" font-family="monospace" font-size="28">schema + migrations</text>
+  <text x="550" y="500" fill="#F3F4F6" font-family="monospace" font-size="28">Express + MongoDB</text>
+  <defs>
+    <linearGradient id="a" x1="90" y1="90" x2="1110" y2="710" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#181A1E"/>
+      <stop offset="1" stop-color="#111317"/>
+    </linearGradient>
+  </defs>
+</svg>
