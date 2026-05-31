@@ -329,6 +329,18 @@ export const WebcamPixelGrid: React.FC<WebcamPixelGridProps> = ({
         const y = offsetYGrid + row * cellSize;
         const elevation = pixel.currentElevation;
 
+        // Skip complex rendering for static cells with low elevation to maximize GPU performance (60 FPS fluid rendering)
+        if (elevation <= 0.15) {
+          dispCtx.fillStyle = `rgb(${pixel.r}, ${pixel.g}, ${pixel.b})`;
+          dispCtx.fillRect(
+            x + gap / 2,
+            y + gap / 2,
+            cellSize - gap,
+            cellSize - gap,
+          );
+          continue;
+        }
+
         // Calculate 3D offset (isometric-like projection) - MUCH larger effect
         const offsetX = -elevation * 1.2;
         const offsetY = -elevation * 1.8;

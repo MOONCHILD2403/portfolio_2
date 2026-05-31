@@ -93,9 +93,37 @@ export function ParticleMesh() {
       depthWrite: false
     });
 
+    // Check initial theme to set correct particle color/blending for Light Mode
+    const initialTheme = typeof document !== "undefined" && document.documentElement.dataset.theme === "light" ? "light" : "dark";
+    if (initialTheme === "light") {
+      material.color.set("#0d0e10");
+      material.blending = THREE.NormalBlending;
+      material.needsUpdate = true;
+    }
+
     const points = new THREE.Points(geometry, material);
     scene.add(points);
     scene.add(new THREE.AmbientLight("#ffffff", 0.8));
+
+    // Watch data-theme changes to dynamically toggle particle colors and blending modes
+    const themeObserver = new MutationObserver(() => {
+      const nextTheme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+      if (nextTheme === "light") {
+        material.color.set("#0d0e10");
+        material.blending = THREE.NormalBlending;
+      } else {
+        material.color.set("#F3F4F6");
+        material.blending = THREE.AdditiveBlending;
+      }
+      material.needsUpdate = true;
+    });
+    
+    if (typeof document !== "undefined") {
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"]
+      });
+    }
 
     runtime.scene = scene;
     runtime.camera = camera;
@@ -211,6 +239,7 @@ export function ParticleMesh() {
     animate();
 
     return () => {
+      themeObserver.disconnect();
       window.removeEventListener("resize", updateSize);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       container.removeEventListener("pointermove", handlePointerMove);

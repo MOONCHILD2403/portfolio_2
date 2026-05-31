@@ -30,16 +30,23 @@ function sameCell(a: Cell, b: Cell) {
 }
 
 function nextApple(snake: Cell[]): Cell {
+  const emptyCells: Cell[] = [];
+
   for (let y = 0; y < GRID_SIZE; y += 1) {
     for (let x = 0; x < GRID_SIZE; x += 1) {
       const candidate = { x, y };
       if (!snake.some((segment) => sameCell(segment, candidate))) {
-        return candidate;
+        emptyCells.push(candidate);
       }
     }
   }
 
-  return { x: 0, y: 0 };
+  if (emptyCells.length === 0) {
+    return { x: 0, y: 0 };
+  }
+
+  const randomIndex = Math.floor(Math.random() * emptyCells.length);
+  return emptyCells[randomIndex];
 }
 
 export function PlaygroundSection() {
@@ -132,6 +139,17 @@ export function PlaygroundSection() {
     window.addEventListener("keydown", handleKeyDown, { passive: false });
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  const handleMove = (dirKey: "ArrowUp" | "ArrowDown" | "ArrowLeft" | "ArrowRight") => {
+    const next = directions[dirKey];
+    setDirection((current) => {
+      if (current.x + next.x === 0 && current.y + next.y === 0) {
+        return current;
+      }
+      return next;
+    });
+    setIsRunning(true);
+  };
 
   const cells = useMemo(() => {
     return Array.from({ length: GRID_SIZE * GRID_SIZE }, (_, index) => {
@@ -245,6 +263,49 @@ export function PlaygroundSection() {
                   key={`${cell.x}-${cell.y}`}
                 />
               ))}
+            </div>
+
+            {/* Mobile On-Screen D-Pad Cross */}
+            <div className="mobile-dpad">
+              <div className="dpad-row">
+                <button
+                  type="button"
+                  className="dpad-btn"
+                  onClick={() => handleMove("ArrowUp")}
+                  data-cursor="Up"
+                >
+                  ▲
+                </button>
+              </div>
+              <div className="dpad-row">
+                <button
+                  type="button"
+                  className="dpad-btn"
+                  onClick={() => handleMove("ArrowLeft")}
+                  data-cursor="Left"
+                >
+                  ◀
+                </button>
+                <div className="dpad-spacer" />
+                <button
+                  type="button"
+                  className="dpad-btn"
+                  onClick={() => handleMove("ArrowRight")}
+                  data-cursor="Right"
+                >
+                  ▶
+                </button>
+              </div>
+              <div className="dpad-row">
+                <button
+                  type="button"
+                  className="dpad-btn"
+                  onClick={() => handleMove("ArrowDown")}
+                  data-cursor="Down"
+                >
+                  ▼
+                </button>
+              </div>
             </div>
 
             <div className="snake-actions">

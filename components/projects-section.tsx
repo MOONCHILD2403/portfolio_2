@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MotionSection } from "@/components/motion-section";
 import { SectionHeader } from "@/components/section-header";
 import { projectCards } from "@/data/portfolio";
@@ -20,6 +20,35 @@ export function ProjectsSection() {
   const [centerIndex, setCenterIndex] = useState(0);
   const [loadingProject, setLoadingProject] = useState<string | null>(null);
   const [lastScrollTime, setLastScrollTime] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 760);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStart === null) return;
+    const touchCurrent = e.targetTouches[0].clientX;
+    const diff = touchStart - touchCurrent;
+
+    if (Math.abs(diff) > 40) {
+      if (diff > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+      setTouchStart(null);
+    }
+  };
 
   const total = projectCards.length;
 
@@ -49,11 +78,13 @@ export function ProjectsSection() {
           aria-label="Previous project"
           data-cursor="Prev"
         >
-          [ PREV ]
+          {"<"}
         </button>
 
         <div
           className="kinetic-stage"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
           onWheel={(event) => {
             const now = Date.now();
             if (now - lastScrollTime < 1100) {
@@ -95,9 +126,9 @@ export function ProjectsSection() {
                 key={card.id}
                 style={{ ["--project-accent" as string]: card.accent }}
                 animate={{
-                  opacity: isCenter ? 1 : isSide ? 0.35 : 0,
-                  scale: isCenter ? 1.15 : isSide ? 0.8 : 0.6,
-                  x: `${diff * 48}%`,
+                  opacity: isCenter ? 1 : isSide ? 0.24 : 0,
+                  scale: isCenter ? (isMobile ? 1.02 : 1.15) : isSide ? 0.74 : 0.6,
+                  x: isMobile ? `${diff * 66}%` : `${diff * 48}%`,
                   zIndex: isCenter ? 3 : isSide ? 2 : 1,
                   filter: isCenter ? "blur(0px)" : isSide ? "blur(0.8px)" : "blur(2px)",
                   pointerEvents: isCenter ? "auto" : isSide ? "auto" : "none"
@@ -168,12 +199,12 @@ export function ProjectsSection() {
           aria-label="Next project"
           data-cursor="Next"
         >
-          [ NEXT ]
+          {">"}
         </button>
       </div>
 
       <div className="projects-footer">
-        <div className="projects-note">Preview loop loaded. Full grid will live on the projects subdomain.</div>
+        <div className="projects-note">Full grid will be live on the projects subdomain.</div>
       </div>
 
       <AnimatePresence>
