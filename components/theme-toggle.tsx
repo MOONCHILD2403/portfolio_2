@@ -45,6 +45,7 @@ export function ThemeToggle() {
       onClick={handleToggle}
       aria-label="Toggle color theme"
       disabled={!mounted}
+      data-cursor="Theme"
     >
       {theme === "dark" ? <HiOutlineSun /> : <HiOutlineMoon />}
     </button>

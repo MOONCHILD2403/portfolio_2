@@ -128,18 +128,24 @@ export function CustomCursor() {
 
     const handleMove = (event: MouseEvent) => {
       const target = event.target as HTMLElement | null;
+      const actionable = target?.closest("[data-cursor]") as HTMLElement | null;
+      const nextLabel = actionable?.getAttribute("data-cursor") ?? "";
 
-      // Disable cursor snapping/annotations inside the floating header navbar
+      // Disable cursor snapping/annotations inside the floating header navbar EXCEPT for actionable targets
       if (target?.closest(".site-header") || target?.closest("header")) {
+        if (actionable) {
+          pointerRef.current = { x: event.clientX, y: event.clientY };
+          hoveredRef.current = actionable;
+          setVisible(true);
+          setLabel(nextLabel);
+          return;
+        }
         pointerRef.current = { x: event.clientX, y: event.clientY };
         hoveredRef.current = null;
         setVisible(true);
         setLabel("");
         return;
       }
-
-      const actionable = target?.closest("[data-cursor]") as HTMLElement | null;
-      const nextLabel = actionable?.getAttribute("data-cursor") ?? "";
 
       pointerRef.current = { x: event.clientX, y: event.clientY };
       hoveredRef.current = actionable;

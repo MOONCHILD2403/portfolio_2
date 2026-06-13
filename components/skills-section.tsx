@@ -166,7 +166,25 @@ export function SkillsSection() {
           {toolPanels.map((panel) => (
             <article className="tools-panel" key={panel.title}>
               <span className="tools-panel-title">{panel.title}</span>
-              <p>{panel.body}</p>
+              <p>
+                {panel.title === "Backend" ? (
+                  <>
+                    Former{" "}
+                    <a
+                      href="https://x.com/karomancer/status/1910152088035758092"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="hover:text-[var(--accent-cyan)] transition-colors"
+                      data-cursor="Meme"
+                    >
+                      R.E.TA.R.D
+                    </a>
+                    -stack dev. {panel.body}
+                  </>
+                ) : (
+                  panel.body
+                )}
+              </p>
             </article>
           ))}
         </div>

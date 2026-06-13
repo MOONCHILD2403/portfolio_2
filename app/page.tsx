@@ -8,6 +8,7 @@ import { ProjectsSection } from "@/components/projects-section";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SkillsSection } from "@/components/skills-section";
+import { RaveParty } from "@/components/rave-party";
 
 export default function HomePage() {
   return (
@@ -21,6 +22,7 @@ export default function HomePage() {
       <SkillsSection />
       <PlaygroundSection />
       <ContactSection />
+      <RaveParty />
       <SiteFooter />
     </main>
   );

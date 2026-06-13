@@ -51,7 +51,7 @@ function nextApple(snake: Cell[]): Cell {
 
 export function PlaygroundSection() {
   const [snake, setSnake] = useState<Cell[]>([...initialSnake]);
-  const [cameraActive, setCameraActive] = useState(true);
+  const [cameraActive, setCameraActive] = useState(false);
   const [direction, setDirection] = useState<Cell>({ x: 1, y: 0 });
   const [apple, setApple] = useState<Cell>({ x: 7, y: 5 });
   const [isRunning, setIsRunning] = useState(false);
@@ -59,6 +59,22 @@ export function PlaygroundSection() {
   const [highscore, setHighscore] = useState(0);
   const [rickrollCount, setRickrollCount] = useState<number | null>(null);
   const [showRickrollCount, setShowRickrollCount] = useState(false);
+  const [partyActive, setPartyActive] = useState(false);
+
+  useEffect(() => {
+    const handleRaveStatus = (e: Event) => {
+      const active = (e as CustomEvent).detail?.active ?? false;
+      setPartyActive(active);
+    };
+    window.addEventListener("rave-status", handleRaveStatus);
+    return () => window.removeEventListener("rave-status", handleRaveStatus);
+  }, []);
+
+  const handlePartyToggle = () => {
+    const nextActive = !partyActive;
+    setPartyActive(nextActive);
+    window.dispatchEvent(new CustomEvent("set-rave", { detail: { active: nextActive } }));
+  };
 
   useEffect(() => {
     const savedHighscore = window.localStorage.getItem(HIGHSCORE_KEY);
@@ -226,17 +242,27 @@ export function PlaygroundSection() {
           </div>
           <div className="playground-card playground-rickroll-card">
             <p className="meta">Do not click</p>
-            <button
-              type="button"
-              className="tempt-button"
-              onClick={triggerRickroll}
-              data-cursor="Risky"
-            >
-              [ FREE_PERFORMANCE_PATCH ]
-            </button>
+            <div className="flex flex-wrap gap-3 mt-3">
+              <button
+                type="button"
+                className="tempt-button"
+                onClick={triggerRickroll}
+                data-cursor="Risky"
+              >
+                [ FREE_PERFORMANCE_PATCH ]
+              </button>
+              <button
+                type="button"
+                className="tempt-button"
+                onClick={handlePartyToggle}
+                data-cursor="Epilepsy Warning"
+              >
+                {partyActive ? "[ STOP ]" : "[ PARTY ]"}
+              </button>
+            </div>
             {showRickrollCount && rickrollCount !== null ? (
-              <p className="playground-copy">
-                Local damage report: {rickrollCount} {rickrollCount === 1 ? "person" : "people"} rickrolled so far.
+              <p className="playground-copy mt-2">
+                Local damage report: {rickrollCount + Math.floor(Math.random() * (200)) + 1} &quot;people&quot; rickrolled so far.
               </p>
             ) : null}
           </div>

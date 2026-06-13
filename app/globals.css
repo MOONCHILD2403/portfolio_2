@@ -410,6 +410,7 @@ select {
   font-size: 0.76rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  white-space: nowrap !important;
   transition:
     border-color 180ms ease,
     background-color 180ms ease,
@@ -1407,8 +1408,10 @@ select {
 @media (pointer: fine) {
   body,
   a,
-  button {
-    cursor: none;
+  button,
+  .theme-toggle,
+  [data-cursor] {
+    cursor: none !important;
   }
 }
 
